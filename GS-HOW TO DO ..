@@ -1,0 +1,95 @@
+
+
+MAVEN
+
+
+launch the instance & connect.
+  ~]# sudo su -
+
+                                                             |---/
+                                                 |--- /ROOT                  
+dir-struct : in mnt folder---  MNT |
+                                                       |---BUILD TOOLS 
+                                                       |---SERVER
+                                                       |---PROJECT
+                                                       |---
+                                                       |---
+
+step1:make parrent directory
+
+  ~]# mkdir -p /data/build-tools
+  ~]# cd /data/build-tools
+  build-tools~]#  
+
+ and download: https://dlcdn.apache.org/maven/maven-3/3.8.7/binaries/apache-maven-3.8.7-bin.zip
+ or
+maven software tar.gz file of 
+maven by wget url and unzip  in it,
+
+
+step2: now install java  verion 1.8.0  and chech by java -version.
+
+step3:after clone of git files maven should run on every place so
+by using envirmental varible we set the path of that maven.
+
+step4: go to root user and  open hidden folder  .bash-profile file in root folder by vi editor and
+edit that  and set ur maven path: 
+
+# sudo su 
+# ls -ltra
+# vi .bash-profile
+PATH=$PATH:$HOME /bin
+export MAVEN_HOME=/gaju/buildtool/apache-maven-3.8.6
+export PATH=$MAVEN_HOME/bin:$PATH
+export PATH
+
+~]# echo PATH ---------------TO CHEAK SETPATH
+
+step5:logout sudo su - and check with mvn command
+~]# mvn
+~]# ls -ltra
+~]# cd .m2/
+~]# ls -ltr
+]# cd reposioery/
+
+step6: here .m2 folder is local repositaory of maven  and to check the dependency file or edit depenency file(if u want to make some changes in conf file)
+we have to go to apache folder and then conf directory and then vi setting.xml file 
+~]# cd /data/build-tools/
+build-tools] cd apache-maven-3.8.6/
+#] cd conf/
+#cat setting.xml 
+ 
+step7: now install git in root user and make one folder and clone git remote repo in that folder
+]# cd ../.
+]# cd .m2/
+]# cd repositoery/
+ 
+install git 
+go to build-tools folder and mkdir myproject and clone git project game-of-life in myproject folder
+
+myproject]# cd game-of-life 
+
+step 8: now run the command  in that repo/ folder mvn clean package  to automatically build,test and download plugins and dependency file  from central repo of apache maven
+and to get .war file through that.
+ 
+game-of-life]# mvn clean package
+
+step9: install maven by yum install maven in that repofolder/
+ 
+step9: check that war file in gameof=life/target/gameoflife.war file here i.e in web folder of clone repository
+]# data/myproject/game-of-life/gameoflife-web/target
+
+step10: make a new folder server for install apache tomcat in it. by wget url-zip.file of tomcat and then unzip it.
+]# cd data/
+data]# mkdir server
+]# cd server /
+
+step11: now copy that .war file in webapps folder of tomacat directory by command 
+cp -r file.war  /pathofwebapps folder     ex: cp -r gameoflife.war /data/buildtool/apache-tomcat 9.0.70/webapps
+
+step12: go to tomacat/ folder thrn bin/ folder then start  tomcat service but first give permission to tomcat by 
+command : chmod -R 744 apache-tomcat-9.0.70 then go to bin/ run command ./startup.sh
+
+step13:now broswe the public ip address by ip.8080/folder name were deploy file is store ex: 10.10.2.255:8080/gameoflife
+
+step14:  if we want to change the port number go to apache tomcat/ cd conf/  then vi server.xml  and change here.
